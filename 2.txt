@@ -1,0 +1,31 @@
+ a) Aggregate Method:
+
+In the aggregate method, we calculate the total cost of performing ( n ) insertions and then divide it by ( n ) to get the average cost per insertion.
+
+Let's denote the initial size of the dynamic table as ( k ). Each time the table needs to be resized, it doubles in size. Therefore, the resizing operations occur when the table reaches sizes ( k, 2k, 4k, 8k, ldots ). 
+
+For the ( i )-th resizing operation, it costs ( k + 2k + 4k + ldots + 2^ik = k(2^i - 1) ) to copy the existing elements to the new table of size ( 2^i times k ).
+
+For simplicity, let's assume that each element insertion has a constant cost of 1.
+
+Now, let's denote the total cost of inserting ( n ) elements and resizing operations as ( T(n) ).
+
+Then, 
+[ T(n) = n + k + 2k + 4k + ldots + 2^ik = n + k(2^0 + 2^1 + ldots + 2^{log n}) ]
+[ = n + k(2^{log n + 1} - 1) ]
+[ = n + k(2n - 1) ]
+[ = O(n) ]
+
+So, the average cost per insertion is ( O(1) ), which means the amortized runtime for inserting ( n ) elements is ( O(n) ) using the aggregate method.
+
+b) Accounting Method:
+
+In the accounting method, we assign each insertion operation a cost. This cost is split into the actual cost of the operation and additional "credits" that are added to the data structure. These credits are then used to pay for expensive operations like resizing.
+
+Let's denote the cost of inserting an element as ( 1 ), and the cost of resizing the table from size ( k ) to ( 2k ) as ( k ). We will assign a cost of ( 2 ) to each inserted element, with ( 1 ) being the actual cost of insertion and ( 1 ) being the credit stored in the data structure.
+
+When the table needs resizing, we use the credit stored in the data structure to pay for the resizing cost. Since each insertion contributes ( 1 ) credit, and the resizing cost is ( k ), we have enough credits to pay for resizing.
+
+In this method, we only care about the total cost, and we don't divide it by the number of operations. So, the amortized runtime for inserting ( n ) elements is also ( O(n) ).
+
+Both methods yield the same result for the amortized runtime, which is ( O(n) ).
